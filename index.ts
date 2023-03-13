@@ -6,6 +6,7 @@ import passport from 'passport';
 import {handleError} from './utils/errors';
 import {infoRouter} from "./routers/info-router";
 import './utils/db';
+import {mapRouter} from "./routers/map-router";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 app.use('/info', infoRouter);
+app.use('/map', mapRouter);
 
 app.use(handleError);
 

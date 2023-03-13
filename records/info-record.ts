@@ -5,7 +5,7 @@ import {emailValidRegEx} from "../utils/email-validation";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
 
-type InfoRecordResult =[InfoRecord[], FieldPacket[]];
+type InfoRecordResult = [InfoRecord[], FieldPacket[]];
 
 
 export class InfoRecord implements InfoEntity {
@@ -17,15 +17,18 @@ export class InfoRecord implements InfoEntity {
     phone: string;
     email: string;
     monday: string;
-    tuesThurs: { from: string; to: string; };
-    friSat: { from: string; to: string; };
-    sunday: { from: string; to: string; };
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    sunday: string;
     orderNumber: number;
 
     constructor(obj: InfoEntity) {
-        const {id, street, number, zipCode, city, phone, email, monday, tuesThurs, friSat, sunday, orderNumber} = obj;
+        const {id, street, number, zipCode, city, phone, email, monday, tuesday, wednesday, thursday, friday, saturday, sunday, orderNumber} = obj;
 
-        this.id = id ?? uuid();
+        this.id = id;
         this.street = street;
         this.number = number;
         this.zipCode = zipCode;
@@ -33,8 +36,11 @@ export class InfoRecord implements InfoEntity {
         this.phone = phone;
         this.email = email;
         this.monday = monday;
-        this.tuesThurs = tuesThurs;
-        this.friSat = friSat;
+        this.tuesday = tuesday;
+        this.wednesday = wednesday;
+        this.thursday = thursday;
+        this.friday = friday;
+        this.saturday = saturday;
         this.sunday = sunday;
         this.orderNumber = orderNumber || 1;
     }
@@ -55,8 +61,11 @@ export class InfoRecord implements InfoEntity {
     }
 
     async insert(): Promise<string> {
+        if (!this.id) {
+            this.id = uuid()
+        }
         this.valid();
-        await pool.execute("INSERT INTO `info`('id', 'street', 'number', 'zipCode', 'city', 'phone', 'monday', 'tuesThurs', 'friSat', 'sunday', 'orderNumber')VALUES(:id, :street, :number, :zipCode, :city, :phone, :monday, :tuesThurs, :friSat, :sunday, :orderNumber)", {
+        await pool.execute("INSERT INTO `info`('id', 'street', 'number', 'zipCode', 'city', 'phone', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday' 'sunday', 'orderNumber')VALUES(:id, :street, :number, :zipCode, :city, :phone, :monday, :tuesday, :wednesday, :thursday, :saturday, :sunday, :orderNumber)", {
             id: String(this.id),
             street: String(this.street),
             number: String(this.number),
@@ -65,10 +74,12 @@ export class InfoRecord implements InfoEntity {
             phone: String(this.phone),
             email: String(this.email),
             monday: String(this.monday),
-            tuesThurs: this.tuesThurs,
-            friSat: this.friSat,
+            tuesday: String(this.tuesday),
+            wednesday: String(this.wednesday),
+            friday: String(this.friday),
+            saturday: String(this.saturday),
             sunday: String(this.sunday),
-            orderNumber: this.orderNumber,
+            orderNumber: Number(this.orderNumber),
         });
         return this.id;
     }
@@ -78,27 +89,6 @@ export class InfoRecord implements InfoEntity {
         const [results] = await pool.execute("SELECT * FROM `info`") as InfoRecordResult;
         return results.map(obj => new InfoRecord(obj));
     }
-
-    // async update(): Promise<string> {
-    //     this.valid();
-    //     await pool.execute("UPDATE `info` SET ('id'=:id, 'street'=:street, 'number'=:number, 'zipCode'=:zipCode, 'city'=:city, 'phone'=:phone, 'monday'=:monday, 'tuesThurs'=:tuesThurs, 'friSat'=:friSat, 'sunday'=:sunday, 'orderNumber'=:orderNumber)", {
-    //         id: String(this.id),
-    //         street: String(this.street),
-    //         number: String(this.number),
-    //         zipCode: String(this.zipCode),
-    //         city: String(this.city),
-    //         phone: String(this.phone),
-    //         email: String(this.email),
-    //         monday: String(this.monday),
-    //         tuesThurs: this.tuesThurs,
-    //         friSat: this.friSat,
-    //         sunday: String(this.sunday),
-    //         orderNumber: this.orderNumber,
-    //     });
-    //
-    //     return this.id;
-    // }
-
 
 
     static async getOne(id: string): Promise<InfoRecord | null> {

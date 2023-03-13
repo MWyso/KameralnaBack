@@ -7,9 +7,12 @@ export interface InfoEntity {
     phone: string;
     email: string;
     monday: string;
-    tuesThurs: { from: string; to: string; };
-    friSat: { from: string; to: string; };
-    sunday: { from: string; to: string; };
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    sunday: string;
     orderNumber: number;
 }
 
