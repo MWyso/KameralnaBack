@@ -1,4 +1,4 @@
-import {InfoEntity, NewInfoEntity} from "../types";
+import {InfoEntity} from "../types";
 import {v4 as uuid} from "uuid";
 import {ValidationError} from "../utils/errors";
 import {emailValidRegEx} from "../utils/email-validation";
