@@ -7,6 +7,7 @@ import {handleError} from './utils/errors';
 import {infoRouter} from "./routers/info-router";
 import './utils/db';
 import {mapRouter} from "./routers/map-router";
+import {menuRouter} from "./routers/menu-router";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 app.use('/info', infoRouter);
+app.use('/menu', menuRouter);
 app.use('/map', mapRouter);
 
 app.use(handleError);
