@@ -3,7 +3,7 @@ export interface MenuEntity {
     name: string;
     price: number;
     description: string;
-    active: boolean;
+    active?: boolean;
     img?: string | File;
 }
 
