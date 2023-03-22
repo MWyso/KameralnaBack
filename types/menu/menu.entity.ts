@@ -7,3 +7,7 @@ export interface MenuEntity {
     img?: string | File;
 }
 
+export interface NewMenuEntity extends Omit<MenuEntity, 'id'> {
+    id?: string;
+}
+

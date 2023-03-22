@@ -1,4 +1,4 @@
-import {MenuEntity} from "../types";
+import {MenuEntity, NewMenuEntity} from "../types";
 import {v4 as uuid} from "uuid";
 import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
@@ -15,7 +15,7 @@ export class MenuRecord implements MenuEntity {
     price: number;
     active: boolean;
 
-    constructor(obj: MenuRecord) {
+    constructor(obj: NewMenuEntity) {
         const {id, name, price, description, active} = obj;
 
         this.id = id;
@@ -39,14 +39,20 @@ export class MenuRecord implements MenuEntity {
             this.id = uuid()
         }
         this.valid();
-        await pool.execute("INSERT INTO `info`('id', 'name', 'description', 'price' 'active')VALUES(:id, :name, :description, :price, :active)", {
+        await pool.execute("INSERT INTO `menu`('id', 'name', 'description', 'price' 'active')VALUES(:id, :name, :description, :price, :active)", {
             id: String(this.id),
             name: String(this.name),
-            description: this.description,
+            description: String(this.description),
             price: Number(this.price),
             active: Boolean(this.active),
         });
         return this.id;
+    }
+
+    async delete(): Promise<void> {
+        await pool.execute("DELETE FROM `menu` WHERE `id`= :id", {
+            id: this.id,
+        })
     }
 
     static async listAll(): Promise<MenuRecord[]> {
