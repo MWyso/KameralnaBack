@@ -18,10 +18,10 @@ export class UserRecord implements UserEntity {
             throw new ValidationError('First name must not be blank and the number of characters must be between 3 and 55.');
         }
         if (!obj.email || obj.email.length < 5 || obj.email.length > 345) {
-            throw new ValidationError('.Email must not be blank and the number of characters must be between 5 and 345.');
+            throw new ValidationError('.Email must not be blank and the number of characters must be between 5 and 255.');
         }
         if (!obj.password || obj.password.length < 6 || obj.password.length > 16) {
-            throw new ValidationError('Password must not be blank and the number of characters must be between 6 and 16.');
+            throw new ValidationError('Password must not be blank and the number of characters must be between 6 and 80.');
         }
 
 
@@ -43,7 +43,7 @@ export class UserRecord implements UserEntity {
             this.id = uuid();
         }
 
-        await pool.execute("INSERT INTO `users` VALUES(:id, :name, :email, :password)", {
+        await pool.execute("INSERT INTO `users`('id', 'name', 'email', 'password') VALUES(:id, :name, :email, :password)", {
             id: this.id,
             name: this.name,
             email: this.email,
