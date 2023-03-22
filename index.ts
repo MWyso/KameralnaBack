@@ -9,6 +9,7 @@ import './utils/db';
 import {mapRouter} from "./routers/map-router";
 import {menuRouter} from "./routers/menu-router";
 import {loginRouter} from "./routers/login-router";
+import {registerRouter} from "./routers/register-router";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/info', infoRouter);
 app.use('/menu', menuRouter);
 app.use('/map', mapRouter);
 app.use('/login', loginRouter);
+app.use('/register', registerRouter);
 
 app.use(handleError);
 
