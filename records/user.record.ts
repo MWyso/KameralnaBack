@@ -39,16 +39,21 @@ export class UserRecord implements UserEntity {
     }
 
     async insert(): Promise<string> {
+        try {
         if (!this.id) {
             this.id = uuid();
         }
 
-        await pool.execute("INSERT INTO `users`('id', 'name', 'email', 'password') VALUES(:id, :name, :email, :password)", {
+        await pool.execute("INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES(:id, :name, :email, :password)", {
             id: this.id,
             name: this.name,
             email: this.email,
             password: this.password,
         });
         return this.id;
+    } catch (err) {
+        console.error('Error inserting MenuRecord into database:', err);
+        throw err;
+    };
     }
 }
