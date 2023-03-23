@@ -35,21 +35,26 @@ export class MenuRecord implements MenuEntity {
     }
 
     async insert(): Promise<string> {
-        if (!this.id) {
-            this.id = uuid()
-        }
-        this.valid();
-        await pool.execute("INSERT INTO `menu`('id', 'name', 'description', 'price' 'active')VALUES(:id, :name, :description, :price, :active)", {
-            id: String(this.id),
-            name: String(this.name),
-            description: String(this.description),
-            price: Number(this.price),
-            active: Boolean(this.active),
-        });
-        return this.id;
-    }
+        try {
+            if (!this.id) {
+                this.id = uuid()
+            }
+            this.valid();
+            await pool.execute("INSERT INTO `menu` (`id`, `name`, `description`, `price`) VALUES (:id, :name, :description, :price)", {
+                id: String(this.id),
+                name: String(this.name),
+                description: String(this.description),
+                price: Number(this.price),
+                active: Boolean(this.active),
+            });
+            return this.id;
+        } catch (err) {
+            console.error('Error inserting MenuRecord into database:', err);
+            throw err;
+        }};
 
-    async delete(): Promise<void> {
+
+            async delete(): Promise<void> {
         await pool.execute("DELETE FROM `menu` WHERE `id`= :id", {
             id: this.id,
         })
