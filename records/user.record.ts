@@ -38,6 +38,11 @@ export class UserRecord implements UserEntity {
         return results.length === 0 ? null : new UserRecord(results[0]);
     }
 
+    static async listAll(): Promise<UserRecord[]> {
+        const [results] = await pool.execute("SELECT * FROM `menu` ORDER BY name ASC") as UserRecordResults;
+        return results.map(obj => new UserRecord(obj));
+    }
+
     async insert(): Promise<string> {
         try {
         if (!this.id) {

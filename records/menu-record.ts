@@ -27,10 +27,10 @@ export class MenuRecord implements MenuEntity {
 
     private valid() {
         if (this.name.length < 3 || this.name.length > 50) {
-            throw new ValidationError('The burger name must be more than 3 letters and less than 50 characters');
+            throw new ValidationError('The item name must be more than 3 letters and less than 50 characters');
         }
         if (this.price <= 0) {
-            throw new ValidationError('Burger price must be greater than 0');
+            throw new ValidationError('Item price must be greater than 0');
         }
     }
 
