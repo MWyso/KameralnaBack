@@ -14,14 +14,14 @@ export class UserRecord implements UserEntity {
     public password: string;
 
     constructor(obj: NewUserEntity) {
-        if (!obj.name || obj.name.length < 3 || obj.name.length > 55 ) {
+        if (!obj.name || obj.name.length < 3 || obj.name.length > 1255 ) {
             throw new ValidationError('First name must not be blank and the number of characters must be between 3 and 55.');
         }
         if (!obj.email || obj.email.length < 5 || obj.email.length > 345) {
             throw new ValidationError('.Email must not be blank and the number of characters must be between 5 and 255.');
         }
-        if (!obj.password || obj.password.length < 6 || obj.password.length > 16) {
-            throw new ValidationError('Password must not be blank and the number of characters must be between 6 and 80.');
+        if (!obj.password || obj.password.length < 6 || obj.password.length > 120) {
+            throw new ValidationError('Password must not be blank and the number of characters must be between 6 and 120.');
         }
 
 
@@ -31,16 +31,28 @@ export class UserRecord implements UserEntity {
         this.password = obj.password;
     }
 
-    static async getOne(email: string): Promise<UserRecord | null> {
+    static async getOneEmail(email: string): Promise<UserRecord | null> {
         const [results] = await pool.execute("SELECT * FROM `users` WHERE `email` = :email", {
             email,
         }) as UserRecordResults;
         return results.length === 0 ? null : new UserRecord(results[0]);
     }
+    static async getOne(id: string): Promise<UserRecord | null> {
+        const [results] = await pool.execute("SELECT * FROM `users` WHERE `id`= :id", {
+            id,
+        }) as UserRecordResults;
+        return results.length === 0 ? null : new UserRecord(results[0]);
+    }
 
     static async listAll(): Promise<UserRecord[]> {
-        const [results] = await pool.execute("SELECT * FROM `menu` ORDER BY name ASC") as UserRecordResults;
+        const [results] = await pool.execute("SELECT * FROM `users` ORDER BY name ASC") as UserRecordResults;
         return results.map(obj => new UserRecord(obj));
+    }
+
+    async delete(): Promise<void> {
+        await pool.execute("DELETE FROM `users` WHERE `id`= :id", {
+            id: this.id,
+        })
     }
 
     async insert(): Promise<string> {
@@ -57,7 +69,7 @@ export class UserRecord implements UserEntity {
         });
         return this.id;
     } catch (err) {
-        console.error('Error inserting MenuRecord into database:', err);
+        console.error('Error inserting AdminRecord into database:', err);
         throw err;
     };
     }
