@@ -11,7 +11,7 @@ registerRouter
     .post('/', async (req, res) => {
         const newUser = new UserRecord(req.body as NewUserEntity);
         const newUserEmail = newUser.email;
-        const oldUser = await UserRecord.getOne(newUserEmail);
+        const oldUser = await UserRecord.getOneEmail(newUserEmail);
         if(oldUser) {
             throw new ValidationError('User about this email already exists.')
         }
@@ -34,4 +34,16 @@ registerRouter
     .get('/:id', async (req, res): Promise<void> => {
         const user = await UserRecord.getOne(req.params.id);
         res.json(user);
+    })
+
+    .delete('/:id', async (req, res): Promise<void> => {
+        const user = await UserRecord.getOne(req.params.id);
+
+        if (!user) {
+            throw new ValidationError('No such gift');
+        }
+
+        await user.delete();
+
+        res.end();
     })

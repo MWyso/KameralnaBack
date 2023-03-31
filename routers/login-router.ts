@@ -10,7 +10,7 @@ let userData = {id: '', name: ''};
 loginRouter
 
     .get('/:email/:password', async (req, res) => {
-        const user = await UserRecord.getOne(req.params.email);
+        const user = await UserRecord.getOneEmail(req.params.email);
         if (!user) {
             throw new ValidationError('There is no user with this email.')
 
