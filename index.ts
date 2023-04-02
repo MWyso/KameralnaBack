@@ -1,4 +1,4 @@
-import express, {json} from 'express';
+import express, {json, Router} from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -21,8 +21,6 @@ app.use(
         credentials: true,
     })
 );
-app.use(cookieParser());
-app.use(passport.initialize());
 
 const router = Router();
 
