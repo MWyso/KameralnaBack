@@ -1,8 +1,6 @@
 import express, {json, Router} from 'express';
 import 'express-async-errors';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import passport from 'passport';
 import {handleError} from './utils/errors';
 import {infoRouter} from "./routers/info-router";
 import './utils/db';
