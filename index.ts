@@ -1,8 +1,6 @@
-import express, {json} from 'express';
+import express, {json, Router} from 'express';
 import 'express-async-errors';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import passport from 'passport';
 import {handleError} from './utils/errors';
 import {infoRouter} from "./routers/info-router";
 import './utils/db';
@@ -21,14 +19,17 @@ app.use(
         credentials: true,
     })
 );
-app.use(cookieParser());
-app.use(passport.initialize());
 
-app.use('/info', infoRouter);
-app.use('/menu', menuRouter);
-app.use('/map', mapRouter);
-app.use('/login', loginRouter);
-app.use('/register', registerRouter);
+const router = Router();
+
+
+router.use('/info', infoRouter);
+router.use('/menu', menuRouter);
+router.use('/map', mapRouter);
+router.use('/login', loginRouter);
+router.use('/register', registerRouter);
+
+app.use('/api', router);
 
 app.use(handleError);
 
