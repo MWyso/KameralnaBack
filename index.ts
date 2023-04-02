@@ -24,11 +24,16 @@ app.use(
 app.use(cookieParser());
 app.use(passport.initialize());
 
-app.use('/info', infoRouter);
-app.use('/menu', menuRouter);
-app.use('/map', mapRouter);
-app.use('/login', loginRouter);
-app.use('/register', registerRouter);
+const router = Router();
+
+
+router.use('/info', infoRouter);
+router.use('/menu', menuRouter);
+router.use('/map', mapRouter);
+router.use('/login', loginRouter);
+router.use('/register', registerRouter);
+
+app.use('/api', router);
 
 app.use(handleError);
 
