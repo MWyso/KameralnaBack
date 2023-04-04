@@ -4,7 +4,7 @@
   <h1>Restaurant Kameralna [BE]</h1>
 
   <p>
-    Backend for the Restuarant Kameralna project.
+    Restuarant Kameralna project.
   </p>
 
 <h4>
@@ -37,6 +37,7 @@ Project on your own for the ***MegaK v2*** course certification.
 * Node.js
 * Express.js
 * TypeScript
+* Maria DB
 
 ## Setup
 
