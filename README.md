@@ -11,6 +11,13 @@
     <a href="https://kameralna.networkmanager.pl/">View Demo</a>
 </h4>
 <hr>
+  <p>
+    More information on the application described in [FE]
+<h4>
+    <a href="https://github.com/MWyso/RestaurantKameralnaFront/blob/main/README.md">Restuarant Kameralna [FE]</a>
+</h4>
+<hr>
+  </p>
 </div>
 
 ## Table of contents
