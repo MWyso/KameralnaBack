@@ -4,13 +4,20 @@
   <h1>Restaurant Kameralna [BE]</h1>
 
   <p>
-    Backend for the Restuarant Kameralna project.
+    Restuarant Kameralna project.
   </p>
 
 <h4>
     <a href="https://kameralna.networkmanager.pl/">View Demo</a>
 </h4>
 <hr>
+  <p>
+    More information on the application described in [FE]
+<h4>
+    <a href="https://github.com/MWyso/RestaurantKameralnaFront/blob/main/README.md">Restuarant Kameralna [FE]</a>
+</h4>
+<hr>
+  </p>
 </div>
 
 ## Table of contents
@@ -20,8 +27,11 @@
 
 ## General info
 Project on your own for the ***MegaK v2*** course certification.
-<br>
-**Project assumptions:**
+<hr>
+<b>This project is the beginning of the road of my new career. It is meant to be a proof and history of my learning and progress in learning JS programming. I want to rebuild it, learn from it and add new technologies/solutions that I will learn during this time.
+The first step I would like to take is to make it in nest.js technology.</b>
+<hr>
+Project assumptions:
 <br>
 -create a website for ordering food and create an admin account to manage it. Adding and deleting things on the Menu.
 
@@ -30,6 +40,7 @@ Project on your own for the ***MegaK v2*** course certification.
 * Node.js
 * Express.js
 * TypeScript
+* Maria DB
 
 ## Setup
 
